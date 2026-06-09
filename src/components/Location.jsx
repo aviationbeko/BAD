@@ -148,12 +148,12 @@ export default function Location() {
             </h4>
             <div style={{ fontSize: '13.5px', fontWeight: '600', color: 'var(--text-main)', marginTop: '4px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', width: '220px', marginBottom: '2px' }}>
-                <span>Pazartesi - Cumartesi:</span>
-                <span>08:30 - 20:00</span>
+                <span>Hafta İçi:</span>
+                <span>12:00 - 00:00</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', width: '220px' }}>
-                <span>Pazar:</span>
-                <span>10:00 - 18:00</span>
+                <span>Hafta Sonu:</span>
+                <span>12:00 - 22:00</span>
               </div>
             </div>
           </div>
