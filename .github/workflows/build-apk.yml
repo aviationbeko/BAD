@@ -18,39 +18,53 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build web app
-        run: npm run build
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install dependencies
+        run: npm install
 
       - name: Install Capacitor Android
         run: npm install @capacitor/android
 
+      - name: Build web app
+        run: npm run build
+
       - name: Sync Capacitor
         run: npx cap sync android
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
 
       - name: Build Debug APK
         run: |
           cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
 
-      - name: Upload APK to Release
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BAD-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Create Release and Upload APK
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
           name: "BAD Araba Detaylama v1.0.${{ github.run_number }}"
-          body: "Otomatik build. APK dosyasını indirip telefonunuza yükleyebilirsiniz."
+          body: |
+            ## 📱 BAD - Araba Detaylama Uygulaması
+            
+            APK dosyasını indirip Android telefonunuza yükleyebilirsiniz.
+            
+            > Yüklemeden önce Ayarlar > Güvenlik > Bilinmeyen kaynaklar'ı açın
           files: android/app/build/outputs/apk/debug/app-debug.apk
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
