@@ -3,7 +3,6 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import Calculator from './components/Calculator';
 import Location from './components/Location';
-import Admin from './components/Admin';
 import Navbar from './components/Navbar';
 import './App.css';
 
@@ -13,15 +12,13 @@ export default function App() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'home':
-        return <Hero onStartBooking={() => setActiveTab('calculator')} />; // calculator'a doğrudan randevu al butonu ile gitmesi düzeltildi
+        return <Hero onStartBooking={() => setActiveTab('calculator')} />;
       case 'services':
         return <Services />;
       case 'calculator':
         return <Calculator />;
       case 'location':
         return <Location />;
-      case 'admin':
-        return <Admin />;
       default:
         return <Hero onStartBooking={() => setActiveTab('calculator')} />;
     }

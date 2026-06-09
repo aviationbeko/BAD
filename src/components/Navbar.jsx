@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Sparkles, Calculator, MapPin, Shield } from 'lucide-react';
+import { Home, Sparkles, Calculator, MapPin } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const tabs = [
@@ -7,7 +7,6 @@ export default function Navbar({ activeTab, setActiveTab }) {
     { id: 'services', label: 'Hizmetler', icon: Sparkles },
     { id: 'calculator', label: 'Randevu Al', icon: Calculator },
     { id: 'location', label: 'Konum', icon: MapPin },
-    { id: 'admin', label: 'Yönetim', icon: Shield },
   ];
 
   return (
