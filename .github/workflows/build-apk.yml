@@ -29,11 +29,8 @@ jobs:
           echo "VITE_SUPABASE_URL=https://iitaqjoneqnzsgkyyrwi.supabase.co" > .env
           echo "VITE_SUPABASE_ANON_KEY=sb_publishable_c7dGAhuLChmtYwRluZRn-w_BDZ_7_eW" >> .env
 
-      - name: Install dependencies (legacy peer deps)
+      - name: Install dependencies
         run: npm install --legacy-peer-deps
-
-      - name: Install Capacitor Android
-        run: npm install @capacitor/android --legacy-peer-deps
 
       - name: Build web app
         run: npm run build
@@ -41,13 +38,16 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
+      - name: Write local.properties for Android SDK
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > android/local.properties
+
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
       - name: Build Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
