@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-color: #080a0f;
+  --card-bg: rgba(18, 24, 38, 0.7);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --primary: #00e5ff;
+  --primary-glow: rgba(0, 229, 255, 0.25);
+  --secondary: #39ff14;
+  --secondary-glow: rgba(57, 255, 20, 0.2);
+  --text-main: #f3f4f6;
+  --text-muted: #8e9aa8;
+  --accent: #ff007f;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(circle at 5% 15%, rgba(0, 229, 255, 0.04) 0%, transparent 35%),
+    radial-gradient(circle at 95% 85%, rgba(57, 255, 20, 0.02) 0%, transparent 35%);
+  background-attachment: fixed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: rgba(12, 16, 26, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55);
+  transition: var(--transition-smooth);
+  position: relative;
+  z-index: 2;
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 229, 255, 0.2);
+  box-shadow: 0 16px 45px 0 rgba(0, 229, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Neon Glows */
+.glow-primary {
+  box-shadow: 0 0 25px var(--primary-glow);
+}
+.glow-secondary {
+  box-shadow: 0 0 25px var(--secondary-glow);
+}
+
+.text-glow-primary {
+  text-shadow: 0 0 8px var(--primary-glow);
+}
+
+.mobile-wrapper {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: rgba(8, 10, 15, 0.98);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 95px; /* Space for navbar */
+  border-left: 1px solid rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+@keyframes custom-shimmer {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  50% { transform: translateX(150%) skewX(-25deg); }
+  100% { transform: translateX(150%) skewX(-25deg); }
+}
+
+.shimmer-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: custom-shimmer 4.5s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Shimmer Button Effect */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  animation: shine 4.5s infinite;
+}
+
+/* Custom Utilities & Active scaling */
+.scale-active {
+  transition: var(--transition-smooth);
+}
+.scale-active:active {
+  transform: scale(0.96) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, #0084ff 100%);
+  color: #040609;
+  font-weight: 700;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 18px rgba(0, 229, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 229, 255, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 229, 255, 0.05);
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* Tab Animations */
+.tab-content {
+  animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Badges */
+.badge {
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-primary {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.badge-secondary {
+  background: rgba(57, 255, 20, 0.1);
+  color: var(--secondary);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+}
+
+.badge-accent {
+  background: rgba(255, 0, 127, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(255, 0, 127, 0.2);
+}
+
+/* Date and Time slots interactive styles */
+.date-selector-btn {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: rgba(0,0,0,0.2);
+  color: var(--text-muted);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.date-selector-btn.active {
+  background: rgba(0, 229, 255, 0.08);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.1);
+}
+
+.time-slot-btn {
+  padding: 10px 0;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+  background: rgba(0,0,0,0.2);
+  color: var(--text-main);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-align: center;
+}
+
+.time-slot-btn.available {
+  border-color: rgba(57, 255, 20, 0.2);
+}
+
+.time-slot-btn.available:hover {
+  border-color: var(--secondary);
+  background: rgba(57, 255, 20, 0.03);
+}
+
+.time-slot-btn.selected {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #040609 !important;
+  box-shadow: 0 0 15px var(--primary), inset 0 0 8px rgba(255, 255, 255, 0.6);
+  animation: selected-pulse 2s infinite;
+}
+
+@keyframes selected-pulse {
+  0% { box-shadow: 0 0 12px var(--primary-glow); }
+  50% { box-shadow: 0 0 20px var(--primary), 0 0 30px rgba(0, 229, 255, 0.2); }
+  100% { box-shadow: 0 0 12px var(--primary-glow); }
+}
+
+.time-slot-btn.taken {
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.4);
+  border-color: transparent;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* Yatay Kaydırılabilir Gün Şeridi */
+.date-scroll-wrapper {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 4px 12px 4px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.date-scroll-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Arka Plan Küre Animasyonları */
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.15;
+  pointer-events: none;
+  animation: blob-float 20s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+  width: 250px;
+  height: 250px;
+  background: var(--primary);
+  top: 15%;
+  left: -100px;
+}
+
+.blob-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--secondary);
+  bottom: 10%;
+  right: -120px;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--accent);
+  top: 50%;
+  left: 40%;
+  animation-delay: -10s;
+}
+
+@keyframes blob-float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, -60px) scale(1.15);
+  }
+  100% {
+    transform: translate(-20px, 30px) scale(0.9);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 3D Kredi Kartı Flip */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 180px;
+  perspective: 1000px;
+  margin: 10px 0 20px 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  padding: 18px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform: rotateY(180deg);
+}
+
+/* Kredi Kartı İç Eleman Tasarımları */
+.card-chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #ffd700 0%, #cca100 100%);
+  border-radius: 4px;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.card-chip::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  width: 22px;
+  height: 20px;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 2px;
+}
+
+.card-number-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 19px;
+  letter-spacing: 3.5px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  margin: 12px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.card-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.card-val {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card-black-line {
+  background: #000;
+  height: 38px;
+  width: 112%;
+  margin-left: -20px;
+  margin-top: 10px;
+}
+
+.card-signature-area {
+  background: rgba(255,255,255,0.8);
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: #000;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* 3D Secure SMS OTP modal */
+.otp-input-field {
+  width: 45px;
+  height: 45px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.otp-input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.payment-success-tick {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: rgba(57, 255, 20, 0.15);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto;
+  font-size: 30px;
+  animation: pulse-glow 1.5s infinite;
+}
+
